@@ -45,6 +45,9 @@ class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             return myApiService.getAJoke().execute().getJoke();
         } catch (IOException e) {
+            if (mCallback != null) {
+                mCallback.failed();
+            }
             return e.getMessage();
         }
     }
@@ -59,6 +62,6 @@ class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
 
     public interface EndpointsAsyncTaskCallback {
         void gotJoke(String joke);
-        void failed(); // maybe
+        void failed();
     }
 }

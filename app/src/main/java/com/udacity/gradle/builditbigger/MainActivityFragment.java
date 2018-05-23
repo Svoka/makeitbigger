@@ -3,6 +3,7 @@ package com.udacity.gradle.builditbigger;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,20 +23,22 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
 
-        AdView mAdView =  root.findViewById(R.id.adView);
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device. e.g.
-        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdView.loadAd(adRequest);
-        return root;
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        rootView.findViewById(R.id.instructions_text_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tellJoke();
+            }
+        });
+
+        return rootView;
     }
 
-    public void tellJoke(View view) {
-
+    public void tellJoke() {
+        ((MainActivityFragmentCallback)getActivity()).navigateToAJoke();
     }
+
+
 }
